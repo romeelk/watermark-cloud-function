@@ -1,0 +1,4 @@
+**env**
+src/scripts/create-resources.sh
+.vscode
+.DS_Store
