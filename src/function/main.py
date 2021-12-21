@@ -19,10 +19,13 @@ def watermark_file(event, context):
     print('Reading the file to watermark: {}'.format(event['name']))
     blob = bucket.blob(event['name'])
     
-    print('Event ID: {}'.format(context.event_id))
-    print('Event type: {}'.format(context.event_type))
+    #print_function_meta_data()
+    
+# def print_function_meta_data(context,event):
+#     print('Event ID: {}'.format(context.event_id))
+#     print('Event type: {}'.format(context.event_type))
 
-    print('File: {}'.format(event['name']))
-    print('Metageneration: {}'.format(event['metageneration']))
-    print('Created: {}'.format(event['timeCreated']))
-    print('Updated: {}'.format(event['updated']))
+#     print('File: {}'.format(event['name']))
+#     print('Metageneration: {}'.format(event['metageneration']))
+#     print('Created: {}'.format(event['timeCreated']))
+#     print('Updated: {}'.format(event['updated']))
