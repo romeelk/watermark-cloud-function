@@ -1,3 +1,5 @@
+[![watermark vulnerability scan](https://github.com/watermark-cloud-action/actions/workflows/ci-build.yml/badge.svg)](https://github.com/romeelk/watermark-cloud-function/actions/workflows/ci-build.yml)
+
 # watermark-cloud-function
 
 A Python cloud function that watermarks an uploaded pdf to cloud storage
