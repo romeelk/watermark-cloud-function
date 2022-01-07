@@ -32,9 +32,10 @@ In this repo change
 ```
 gcloud functions deploy watermark_file \
 --runtime python39 --trigger-bucket=storagebucket 
+--set-env-vars BLURRED_BUCKET_NAME=storageoutputbucket
 ```
 
-Where storagebucket is the bucket triggering the function.
+Where storagebucket is the bucket triggering the function and storageoutputbucket is the bucket where the watermarked pdf will be written to.
 
 ## Uploading a file to test trigger
 
