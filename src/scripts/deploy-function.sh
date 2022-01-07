@@ -1,3 +1,4 @@
+!#/bin/bash
 
 gcloud functions deploy watermark_file \
 --runtime python39 --trigger-bucket=watermarkinput 

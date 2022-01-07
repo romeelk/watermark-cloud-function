@@ -2,15 +2,19 @@
 
 [![Scan python code with CodeQL](https://github.com/romeelk/watermark-cloud-function/actions/workflows/codeql-scan.yml/badge.svg)](https://github.com/romeelk/watermark-cloud-function/actions/workflows/codeql-scan.yml)
 
-# watermark-cloud-function
+# Introduction
 
 A Python cloud function that watermarks an uploaded pdf to cloud storage
 
-## pre-requesites
+## Pre-requesites
 
 To use this repo you will require:
 * Python 3
 * gcloud cli
+
+# Architecture
+
+![architecture](watermark-cloudfunction.png)
 
 ## creating a cloud function from gcloud
 
