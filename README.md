@@ -1,4 +1,4 @@
-[![watermark vulnerability scan](https://github.com/watermark-cloud-action/actions/workflows/ci-build.yml/badge.svg)](https://github.com/romeelk/watermark-cloud-function/actions/workflows/ci-build.yml)
+[![Python package](https://github.com/romeelk/watermark-cloud-function/actions/workflows/ci-build.yml/badge.svg)](https://github.com/romeelk/watermark-cloud-function/actions/workflows/ci-build.yml)
 
 # watermark-cloud-function
 
@@ -32,7 +32,7 @@ In this repo change
 ```
 gcloud functions deploy watermark_file \
 --runtime python39 --trigger-bucket=storagebucket 
---set-env-vars BLURRED_BUCKET_NAME=storageoutputbucket
+--set-env-vars WATERMARK_OUTPUT_BUCKET_NAME=storageoutputbucket
 ```
 
 Where storagebucket is the bucket triggering the function and storageoutputbucket is the bucket where the watermarked pdf will be written to.
