@@ -1,5 +1,7 @@
 [![Python package](https://github.com/romeelk/watermark-cloud-function/actions/workflows/ci-build.yml/badge.svg)](https://github.com/romeelk/watermark-cloud-function/actions/workflows/ci-build.yml)
 
+[![Scan python code with CodeQL](https://github.com/romeelk/watermark-cloud-function/actions/workflows/codeql-scan.yml/badge.svg)](https://github.com/romeelk/watermark-cloud-function/actions/workflows/codeql-scan.yml)
+
 # watermark-cloud-function
 
 A Python cloud function that watermarks an uploaded pdf to cloud storage
