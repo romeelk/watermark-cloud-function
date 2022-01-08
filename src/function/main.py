@@ -5,6 +5,7 @@ from google.cloud import storage
 
 storage_client = storage.Client()
 output_bucket_name = os.getenv("WATERMARK_OUTPUT_BUCKET_NAME")
+watermark_file_name = 'watermark.pdf'
    
 def watermark_file(event, context):
     """Background Cloud Function to be triggered by Cloud Storage.
@@ -19,6 +20,8 @@ def watermark_file(event, context):
     Returns:
         None; the output is written to Stackdriver Logging
     """
+    print_function_meta_data(context, event)
+
     print('instantiating storage client')
     uploaded_file = format(event['name'])
     input_bucket_name = event["bucket"]
@@ -27,14 +30,16 @@ def watermark_file(event, context):
         print('Invalid file format uploaded..Function will not watermark')
         return
    
-    storage_client = storage.Client()
     print('Reading from Bucket: {}'.format(event['bucket']))
     print('Reading the file to watermark: {}'.format(event['name']))
    
     input_blob = storage_client.bucket(input_bucket_name).get_blob(uploaded_file)
-    watermark_blob = storage_client.bucket(output_bucket_name).get_blob('watermark.pdf')
-   
-    print_function_meta_data(context, event)
+    watermark_blob = storage_client.bucket(output_bucket_name).get_blob(watermark_file_name)
+
+    if(watermark_blob == None):
+        print('Failed to read: {} Function cannot watermark!!'.format(watermark_file_name))
+        return
+
     watermark_pdf(input_blob, watermark_blob)
     
 def print_function_meta_data(context, event):

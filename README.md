@@ -4,17 +4,25 @@
 
 # Introduction
 
-A Python cloud function that watermarks an uploaded pdf to cloud storage
+A Python cloud function that watermarks an uploaded pdf to cloud storage. It does this using a Python library 
+which merges one pdf with the watermark with the source pdf.
 
 ## Pre-requesites
 
 To use this repo you will require:
 * Python 3
 * gcloud cli
+* GCP project
+* Cloud function
 
 # Architecture
 
 ![architecture](watermark-cloudfunction.png)
+
+There are two cloud storage buckets:
+
+1) input storage bucket. This is the Cloud function trigger bucket. Upload the file to watermark. 
+2) output storage bucket. Where the watermark pdf exists and where the final merged pdf is generated.
 
 ## creating a cloud function from gcloud
 
@@ -36,6 +44,7 @@ To deploy the function run the following gcloud function from the folder where t
 
 In this repo change 
 ```
+cd src/function
 gcloud functions deploy watermark_file \
 --runtime python39 --trigger-bucket=storagebucket 
 --set-env-vars WATERMARK_OUTPUT_BUCKET_NAME=storageoutputbucket
@@ -45,7 +54,19 @@ Where storagebucket is the bucket triggering the function and storageoutputbucke
 
 ## Uploading a file to test trigger
 
+The Python package watermarks the uploaded pdf by merging it with a file called watermark.pdf
+
+1) Upload watermark.pdf to the output cloud storage bucket
+2) Upload a pdf to watermark to the input storage cucket
+
 To test trigger upload a pdf file from this repo:
 
-gsutil cp watermark.pdf  gs://bucketname
+```
+gsutil cp watermark.pdf gs://outputbucket
+gsutil cp input.pdf  gs://inputstoragebucket
 
+```
+
+## Monitor the cloud function
+
+You can watch the trace logs in the GCP portal by navigating to the log tab in the function.
