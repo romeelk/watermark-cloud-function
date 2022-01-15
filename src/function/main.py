@@ -20,11 +20,11 @@ def watermark_file(event, context):
     Returns:
         None; the output is written to Stackdriver Logging
     """
+    output_bucket_name = os.environ.get('WATERMARK_OUTPUT_BUCKET_NAME')
+    print(f'Output bucket: {output_bucket_name}')
+    
     print_function_meta_data(context, event)
 
-    output_bucket_name = 'watermarkoutput'
-
-    print('instantiating storage client')
     uploaded_file = format(event['name'])
     input_bucket_name = event["bucket"]
     
@@ -70,15 +70,15 @@ def watermark_pdf(blob_to_watermark, blob_to_merge):
     input_pdf = PdfFileReader(inputblob_local_filename)
     watermark_pdf = PdfFileReader(watermarkblob_local_filename)
     watermark_page = watermark_pdf.getPage(0)
-    waternarked_file_name = file_name+"watermark.pdf"
-    mergedfile =  "watermarked_" + os.path.abspath(inputblob_local_filename).split('.')[0]
+    waternarked_file_name = os.path.splitext(file_name)[0]+"_watermarked.pdf"
+    mergedfile =  os.path.abspath(inputblob_local_filename).split('.')[0] + "_watermarked.pdf"
     #using python library watermark file and write to output stream and close
     print(f'Generating watermark file" {mergedfile}')
     
     output = PdfFileWriter()
 
-    for i in range(input_pdf.getNumPages()):
-        pdf_page = input_pdf.getPage(i)
+    for page in range(input_pdf.getNumPages()):
+        pdf_page = input_pdf.getPage(page)
         pdf_page.mergePage(watermark_page)
         output.addPage(pdf_page)
 
@@ -89,5 +89,3 @@ def watermark_pdf(blob_to_watermark, blob_to_merge):
 
     blob = output_bucket.blob(waternarked_file_name)
     blob.upload_from_filename(mergedfile)
-
-    
