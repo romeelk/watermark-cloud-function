@@ -4,7 +4,7 @@ from PyPDF2.pdf import PdfFileReader, PdfFileWriter
 from google.cloud import storage
 
 storage_client = storage.Client()
-output_bucket_name = os.getenv("WATERMARK_OUTPUT_BUCKET_NAME")
+
 watermark_file_name = 'watermark.pdf'
    
 def watermark_file(event, context):
@@ -21,6 +21,8 @@ def watermark_file(event, context):
         None; the output is written to Stackdriver Logging
     """
     print_function_meta_data(context, event)
+
+    output_bucket_name = 'watermarkoutput'
 
     print('instantiating storage client')
     uploaded_file = format(event['name'])
@@ -68,8 +70,8 @@ def watermark_pdf(blob_to_watermark, blob_to_merge):
     input_pdf = PdfFileReader(inputblob_local_filename)
     watermark_pdf = PdfFileReader(watermarkblob_local_filename)
     watermark_page = watermark_pdf.getPage(0)
-    waternarked_file_name = file_name+"watermark.odf"
-    mergedfile = os.path.abspath(inputblob_local_filename).split('.')[0] +"watermark.pdf"
+    waternarked_file_name = file_name+"watermark.pdf"
+    mergedfile =  "watermarked_" + os.path.abspath(inputblob_local_filename).split('.')[0]
     #using python library watermark file and write to output stream and close
     print(f'Generating watermark file" {mergedfile}')
     
