@@ -2,3 +2,6 @@
 src/scripts/create-resources.sh
 .vscode
 .DS_Store
+**htmlcov**
+src/__pycache__/watmerklocal.cpython-37.pyc
+src/.coverage

@@ -32,7 +32,9 @@ def generate_watermark(input_pdf_path, watermark_pdf_path):
         output.write(merged_file)
 
     #Append the suffix watermark to input file name
-
+def format_file(path):
+    return f"{path}_watermark.pdf"
+    
 if __name__ == "__main__":
     print("Enter pdf to watermark:")
     inputpdf = input()
