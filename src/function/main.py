@@ -25,7 +25,7 @@ def watermark_file(event, context):
     
     print_function_meta_data(context, event)
 
-    uploaded_file = format(event['name'])
+    uploaded_file = event['name']
     input_bucket_name = event["bucket"]
     
     if(not uploaded_file.endswith('.pdf')):
@@ -39,7 +39,7 @@ def watermark_file(event, context):
     watermark_blob = storage_client.bucket(output_bucket_name).get_blob(watermark_file_name)
 
     if(watermark_blob == None):
-        print('Failed to read: {} Function cannot watermark!!'.format(watermark_file_name))
+        print('Failed to read: {} from cloud storage. Function cannot watermark!!'.format(watermark_file_name))
         return
 
     watermark_pdf(input_blob, watermark_blob)
