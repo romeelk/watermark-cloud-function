@@ -9,9 +9,7 @@ import os
 
 def generate_watermark(input_pdf_path, watermark_pdf_path):
     # validate if both files exist otherwise throw error
-    
-    pdf_writer = PdfFileWriter()
-    
+      
     with open(input_pdf_path, "rb") as input_pdf_stream:
         input_pdf = PdfFileReader(input_pdf_stream)
 
@@ -24,7 +22,7 @@ def generate_watermark(input_pdf_path, watermark_pdf_path):
     
             create_watermarked_file(input_pdf, watermark_page, merged_pdf)
             return merged_pdf
-            
+
 def create_watermarked_file(input_pdf, watermark_page, merged):
     print(f'Generating watermark file" {merged}')
     output = PdfFileWriter()
