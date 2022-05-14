@@ -19,11 +19,12 @@ def generate_watermark(input_pdf_path, watermark_pdf_path):
             watermark_pdf = PdfFileReader(watermark_pdf_stream)
             
             watermark_page = watermark_pdf.getPage(0)
-            merged = os.path.abspath(input_pdf_path)[:-4] +"_watermark.pdf"
+            merged_pdf = os.path.abspath(input_pdf_path)[:-4] +"_watermark.pdf"
             #using python library watermark file and write to output stream and close
     
-            create_watermarked_file(input_pdf, watermark_page, merged)
-
+            create_watermarked_file(input_pdf, watermark_page, merged_pdf)
+            return merged_pdf
+            
 def create_watermarked_file(input_pdf, watermark_page, merged):
     print(f'Generating watermark file" {merged}')
     output = PdfFileWriter()
