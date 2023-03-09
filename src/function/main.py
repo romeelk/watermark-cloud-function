@@ -1,6 +1,6 @@
 import os
 import tempfile
-from PyPDF2.pdf import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfFileReader, PdfFileWriter
 from google.cloud import storage
 
 storage_client = storage.Client()

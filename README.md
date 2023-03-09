@@ -14,6 +14,8 @@ To use this repo you will require:
 * gcloud cli
 * GCP project
 * Cloud function
+* A triggering cloud storage bucket
+* An output cloud storage bucket
 
 # Architecture
 
@@ -24,6 +26,15 @@ There are two cloud storage buckets:
 1) input storage bucket. This is the Cloud function trigger bucket. Upload the file to watermark. 
 2) output storage bucket. Where the watermark pdf exists and where the final merged pdf is generated.
 
+
+## Create the storage buckets
+
+```
+gsutil mb gs://rkwatermarkinput
+
+gsutil mb gs://rkwatermarkoutput
+
+```
 ## creating a cloud function from gcloud
 
 Before you create a gcloud function in GCP make sure you have created a GCP project.
