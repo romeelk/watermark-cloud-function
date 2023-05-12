@@ -1,6 +1,6 @@
 import os
 import tempfile
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfReader, PdfWriter
 from google.cloud import storage
 
 storage_client = storage.Client()
@@ -67,25 +67,27 @@ def watermark_pdf(blob_to_watermark, blob_to_merge):
     blob_to_merge.download_to_filename(watermarkblob_local_filename)
     print(f"Pdf {watermark_file_name} was downloaded to {watermarkblob_local_filename}.")
     
-    input_pdf = PdfFileReader(inputblob_local_filename)
-    watermark_pdf = PdfFileReader(watermarkblob_local_filename)
-    watermark_page = watermark_pdf.getPage(0)
+    input_pdf = PdfReader(inputblob_local_filename)
+    watermark_pdf = PdfReader(watermarkblob_local_filename)
+    watermark_page = watermark_pdf.pages[0]
     waternarked_file_name = os.path.splitext(file_name)[0]+"_watermarked.pdf"
     mergedfile =  os.path.abspath(inputblob_local_filename).split('.')[0] + "_watermarked.pdf"
     #using python library watermark file and write to output stream and close
     print(f'Generating watermark file" {mergedfile}')
     
-    output = PdfFileWriter()
+    output = PdfWriter()
 
-    for page in range(input_pdf.getNumPages()):
-        pdf_page = input_pdf.getPage(page)
-        pdf_page.mergePage(watermark_page)
-        output.addPage(pdf_page)
+    for page in range(len(input_pdf.pages)):
+        pdf_page = input_pdf.pages[page]
+        pdf_page.merge_page(watermark_page)
+        output.add_page(pdf_page)
 
     with open(mergedfile, "wb") as merged_file:
         output.write(merged_file)
 
-    output_bucket = storage_client.get_bucket('watermarkoutput')
+    output_bucket_name = os.environ.get('WATERMARK_OUTPUT_BUCKET_NAME')
+  
+    output_bucket = storage_client.get_bucket(output_bucket_name)
 
     blob = output_bucket.blob(waternarked_file_name)
     blob.upload_from_filename(mergedfile)
